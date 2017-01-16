@@ -57,21 +57,11 @@ public class MainApplicationTest {
     public void testApplication()throws Exception{
 
         //Message to send
-        final String messageToSend = "test";
+        final String messageToSend = "stream";
 
         // Create the expected word counts
         List<KeyValue<String, Long>> expectedWordCounts = new ArrayList<>();
         expectedWordCounts.add(new KeyValue<>("stream",2L));
-        expectedWordCounts.add(new KeyValue<>("kafka",1L));
-        expectedWordCounts.add(new KeyValue<>("stream",2L));
-        expectedWordCounts.add(new KeyValue<>("kafka",2L));
-        expectedWordCounts.add(new KeyValue<>("stream",2L));
-        expectedWordCounts.add(new KeyValue<>("kafka",3L));
-        expectedWordCounts.add(new KeyValue<>("stream",3L));
-
-        expectedWordCounts.add(new KeyValue<>("kafka",3L));
-        expectedWordCounts.add(new KeyValue<>("stream",3L));
-        expectedWordCounts.add(new KeyValue<>("test",1L));
 
 
         // Actual word count

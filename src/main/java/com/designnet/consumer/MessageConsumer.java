@@ -18,7 +18,7 @@ public class MessageConsumer {
 
 
 
-    @KafkaListener(id = "test1", topics = "outputTopic8", group = "testGroup")
+    @KafkaListener(id = "test1", topics = "wordCount-outputTopic", group = "testGroup")
     public void receiveMessage(String message) {
         LOGGER.info("received message='{}'", message);
         latch.countDown();
