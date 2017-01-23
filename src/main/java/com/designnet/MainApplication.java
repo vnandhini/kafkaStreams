@@ -3,6 +3,7 @@ package com.designnet;
 import com.designnet.producer.MessageProducer;
 import com.designnet.stream.CountProcessor;
 import com.designnet.stream.KafkaStreamConfig;
+import com.designnet.twitter.TwitterStream;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.processor.StateStoreSupplier;
@@ -10,6 +11,7 @@ import org.apache.kafka.streams.processor.TopologyBuilder;
 import org.apache.kafka.streams.state.Stores;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,37 +32,21 @@ public class MainApplication {
         SpringApplication.run(MainApplication.class, args);
     }
 
+    @Autowired
+    KafkaStreamConfig kafkaStreamConfig;
+
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
 
-            LOGGER.info("Inside main");
-
-            KafkaStreamConfig kafkaConfiguration = ctx.getBean(KafkaStreamConfig.class);
-
 //            MessageProducer messageProducer = ctx.getBean(MessageProducer.class);
-//            messageProducer.sendMessage(kafkaConfiguration.getInputTopic(), "Spring");
+//            messageProducer.sendMessage(kafkaStreamConfig.getInputTopic(), "Spring");
 
-            TopologyBuilder builder = new TopologyBuilder();
+            kafkaStreamConfig.wordCountTopology();
 
-            StateStoreSupplier countStore = Stores.create("Counts")
-                    .withKeys(Serdes.String())
-                    .withValues(Serdes.Long())
-                    .persistent()
-                    .build();
-
-
-            builder.addSource("Source", kafkaConfiguration.getInputTopic())
-                    .addProcessor("Process", () -> new CountProcessor(), "Source")
-                    .addStateStore(countStore, "Process")
-                    .addSink("Sink", kafkaConfiguration.getOutputTopic(), "Process");
-
-            KafkaStreams kafkaStreams = new KafkaStreams(builder, kafkaConfiguration.getKafkaStreamConfigs());
-            kafkaStreams.start();
-
-//            Add shutdown hook
-
-            Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+//            TwitterStream twitterStream = ctx.getBean(TwitterStream.class);
+//            twitterStream.listenTwitter();
+//            kafkaStreamConfig.twitterWordCountTopology();
 
 
         };

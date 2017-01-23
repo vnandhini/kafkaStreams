@@ -21,11 +21,25 @@ public class CountProcessor implements Processor {
     private ProcessorContext context;
     private KeyValueStore<String, Long> kvStore;
 
+    private String stateStoreConfig = new String();
+
+    public CountProcessor(){
+        super();
+    }
+
+    public CountProcessor(String stateStoreConfig){
+        super();
+        this.stateStoreConfig = stateStoreConfig;
+
+    }
+
     @Override
     public void init(ProcessorContext processorContext) {
         this.context = processorContext;
         this.context.schedule(1000);
-        this.kvStore = (KeyValueStore) processorContext.getStateStore("Counts");
+//        this.kvStore = (KeyValueStore) processorContext.getStateStore("Counts");
+        this.kvStore = (KeyValueStore) processorContext.getStateStore(stateStoreConfig);
+
 
     }
 

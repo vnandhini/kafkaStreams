@@ -62,6 +62,8 @@ public class MainApplicationTest {
         // Create the expected word counts
         List<KeyValue<String, Long>> expectedWordCounts = new ArrayList<>();
         expectedWordCounts.add(new KeyValue<>("stream",2L));
+        expectedWordCounts.add(new KeyValue<>("stream",3L));
+        expectedWordCounts.add(new KeyValue<>("stream",4L));
 
 
         // Actual word count
@@ -82,10 +84,10 @@ public class MainApplicationTest {
         for (ConsumerRecord<String, Long> record : records) {
             actualWordCounts.add(new KeyValue<>(record.key(), record.value()));
 
-            LOGGER.info("Message consumed from sink : {}, Key : {}, Value : {}"
-                    , kafkaStreamConfig.getOutputTopic()
-                    , record.key()
-                    , String.valueOf(record.value()));
+//            LOGGER.info("Message consumed from sink : {}, Key : {}, Value : {}"
+//                    , kafkaStreamConfig.getOutputTopic()
+//                    , record.key()
+//                    , String.valueOf(record.value()));
 
         }
 

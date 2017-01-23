@@ -9,14 +9,16 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by nandhini on 13/1/17.
  */
-public class MessageConsumer {
+public class TwitterMessageConsumer {
 
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(MessageConsumer.class);
+            .getLogger(TwitterMessageConsumer.class);
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    @KafkaListener(id = "test1", topics = "wordCountApp-outputTopic", group = "testGroup")
+
+
+    @KafkaListener(id = "test1", topics = "wordCount-twitterOutputTopic", group = "testGroup8")
     public void receiveMessage(String message) {
         LOGGER.info("received message='{}'", message);
         latch.countDown();
